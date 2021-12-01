@@ -1,0 +1,14 @@
+python3 new_test.py --name xxxxx --model ResNet18 --continue_train 1 --continue_model xxxxxx
+python3 train.py --name xxxxx --model ResNet18 --continue_train 1 --continue_model xxxxxx
+
+训练和测试流程：
+
+训练
+draw_json.py 外包标注文件转化为图片label
+1.获取标注数据
+2.road_make_seg.py 脚本制作标注数据的文件列表
+3.训练命令
+python3 train.py --checkpoints_dir ./checkpoints_fastscnn --name label12_0302_fast_scnn --model fast_scnn --gpu_ids 0 --continue_train 0 --lr 0.005 --batchSize 2 --nepochs 2000 --list /cv/fast_scnn/dataset/dcnn_frontback_door/train_list.txt --vallist /cv/fast_scnn/dataset/dcnn_frontback_door/test_list.txt --save_latest_freq 500 --label_nc 12 --depthconv 0
+
+4.测试命令
+python3 new_test_local.py --continue_train 1 --continue_model /cv/fast_scnn/checkpoints_fastscnn/label11_0304_fast_scnn/model/latest_net_net.pth --depthconv 0 --model fast_scnn --gpu_ids 0 --label_nc 12 --list /cv/fast_scnn/dataset/crane_images_result/crane_image_train/train_list.txt
